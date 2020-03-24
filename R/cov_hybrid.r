@@ -1,36 +1,36 @@
 #' @export
 cov_hybrid <- function(R0 = 2.0,
-                       Rp = 1.5,
+                       Rp = 1.5,# when virus known to be present
                        Rover = 0.9,
                        vecN=66000000*c(0.25,0.25,0.25,0.25),
-                       vecI0=rep(5000/length(vecN),length(vecN)),
-                       vecInfNess=rep(1,length(vecN)),
-                       vecSusTy=rep(1,length(vecN)),
-                       vecPS=rep(0.1,length(vecN)),
-                       vecPM=rep(0.1,length(vecN)),
-                       vecPA=rep(0.1,length(vecN)),
+                       vecI0=rep(5000/length(vecN),length(vecN)),# initial number
+                       vecInfNess=rep(1,length(vecN)), # rel infectiousness by age
+                       vecSusTy=rep(1,length(vecN)), # no evidence of difference
+                       vecPS=rep(0.1,length(vecN)),# proportion severe (critical) - only die from severe
+                       vecPM=rep(0.1,length(vecN)),# probability of being mild (hosp)
+                       vecPA=rep(0.1,length(vecN)),# probability assymp # vecPF is prob flu-like
                        matCt=matrix(1/length(vecN),
                                      nrow=length(vecN),
                                      ncol=length(vecN)),
                        matCtClosure=matrix(1/length(vecN),
                                      nrow=length(vecN),
                                      ncol=length(vecN)),
-                       scLim=c(99999,99999),
-                       vecTcalc=seq(0,720,0.1),
-                       vecRtrel=rep(1,length(vecTcalc)),
-                       D_E=2,
-                       D_I1=3,
-                       D_I2=3,
-                       D_HR=20,
-                       D_HD=23,
-                       D_ICU=rep(7,length(vecN)),
+                       scLim=c(99999,99999), # start and stop time of school closures
+                       vecTcalc=seq(0,720,0.1),# timesteps
+                       vecRtrel=rep(1,length(vecTcalc)),# relative R_t over time
+                       D_E=2, # duration latent 
+                       D_I1=3,# duration pre-symptomatic
+                       D_I2=3,# duration symptomatic
+                       D_HR=13.3,# hospital; going to recover
+                       D_HD=11.2,# hospital; going to die
+                       D_ICU=rep(9.8,length(vecN)),
                        deterministic=TRUE,
                        nReals=2,
                        trig_pres=99999999,
                        icu_cap=0.9999,
                        plot=FALSE,
                        trickle=0,
-                       sevBchange=FALSE
+                       sevBchange=FALSE #???
                        ) { 
     
     ## Define housekeeping variables
